@@ -27,7 +27,12 @@ def main():
     # if we have 2 sequences, and a maximum sequence length of 1024 tokens,
     # 0.96 MB * 1024 * 2 = 1966 MB -> 0.98 GB per GPU of memory since KV cache gets split as well
 
-    
+    # from tiny_shakespeare project:
+    # def forward(self, x):
+    #     B, T, C = x.shape
+    #     k = self.key(x)   # (B, T, C)
+    #     q = self.query(x) # (B, T, C)
+    # B = number of sequences, T = max_model_len, and C = n_embed (in tiny_shakespeare, C is 64, but we have 6 heads, so 6*64 = 384 = n_embed)
 
     llm = LLM(model="Qwen/Qwen2.5-14B", tensor_parallel_size=2, max_num_seqs=2, max_model_len=1024, gpu_memory_utilization=0.96)
 
